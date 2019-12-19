@@ -1,35 +1,36 @@
-/*
+// This is a backtracking approach (recusrion) to solve a Sudoku board
 
-This is a backtracking approach (recusrion) to solve a Sudoku board
-
-Approach for backtracking problems:
-	1. choice: place 1-9 in an empty cell
-	2. place can't break the board
-	3. goal: fill the board
-
-
-	traverse row by row
-	Constraints:
-	- break row?
-	- break col?
-	- break subgrid?
-
-
-
-*/
 #include <iostream>
 
 // Function to print the Sudoku grid
 void printGrid(int grid[9][9]) {
+
 	for(int row = 0; row < 9; row++) {
-		for(int col = 0; col < 9; col++) {
-			std::cout << grid[row][col] << " ";
+		
+		if(row % 3 == 0) {
+				std::cout << " -----------------------------" << std::endl;
 		}
-		std::cout << std::endl;
+
+		for(int col = 0; col < 9; col++) {
+
+			if(col % 3 == 0) {
+				std::cout << "|";
+			}
+
+			if(grid[row][col] == 0) {
+				std::cout << " . ";
+			} else {
+				std::cout << " " << grid[row][col] << " ";
+			}
+		}
+
+		std::cout << "|" << std::endl;
+
 	}
-	std::cout << std::endl;
+	std::cout << " -----------------------------" << std::endl;
 }
 
+// Check if a given number can be placed in an empty cell without breaking any of three rules
 bool checkPlacement(int board[9][9], int value, int row, int col) {
 
 	// Row check
@@ -76,7 +77,7 @@ bool solver(int board[9][9], int row, int col) {
 		return solver(board, row, col+1);
 	}
 
-	// Check 1-9
+	// Check through 1-9 if can be placed in the empty cell
 	for(int i = 1; i <= 9; i++) {
 		if(checkPlacement(board, i, row, col)) {
 			board[row][col] = i;
@@ -102,19 +103,7 @@ int main() {
 	                  {0, 0, 0, 0, 7, 0, 0, 4, 0},  
 	                  {1, 5, 0, 0, 0, 0, 6, 0, 0},  
 	                  {0, 0, 0, 0, 1, 0, 0, 8, 0},  
-	                  {0, 0, 0, 0, 0, 2, 7, 0, 5}}; 
-    
-    // Another problem
-    /*int grid[9][9] = {
-    {8, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 3, 6, 0, 0, 0, 0, 0},
-    {0, 7, 0, 0, 9, 0, 2, 0, 0},
-    {0, 5, 0, 0, 0, 7, 0, 0, 0},
-    {0, 0, 0, 0, 4, 5, 7, 0, 0},
-    {0, 0, 0, 1, 0, 0, 0, 3, 0},
-    {0, 0, 1, 0, 0, 0, 0, 6, 8},
-    {0, 0, 8, 5, 0, 0, 0, 1, 0},
-    {0, 9, 0, 0, 0, 0, 4, 0, 0}};*/
+	                  {0, 0, 0, 0, 0, 2, 7, 0, 5}};              
 
 
 	// Print board before solving
@@ -130,15 +119,3 @@ int main() {
 	
 	return 0;
 }
-
-
-
-
-/*
-Choice
-COnstraints
-Goal
-
-9x9 grid,
-9 subgrids 3x3
-*/
